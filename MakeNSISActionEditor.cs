@@ -1,7 +1,8 @@
-﻿using Inedo.BuildMaster;
-using Inedo.BuildMaster.Extensibility.Actions;
+﻿using Inedo.BuildMaster.Extensibility.Actions;
 using Inedo.BuildMaster.Web.Controls;
 using Inedo.BuildMaster.Web.Controls.Extensions;
+using Inedo.IO;
+using Inedo.Web.Controls;
 
 namespace Inedo.BuildMasterExtensions.NSIS
 {
@@ -14,7 +15,7 @@ namespace Inedo.BuildMasterExtensions.NSIS
             this.EnsureChildControls();
 
             var action = (MakeNSISAction)extension;
-            this.ctlScriptFile.Text = string.IsNullOrEmpty(action.OverriddenSourceDirectory) ? action.ScriptFile : Util.Path2.Combine(action.OverriddenSourceDirectory, action.ScriptFile);
+            this.ctlScriptFile.Text = string.IsNullOrEmpty(action.OverriddenSourceDirectory) ? action.ScriptFile : PathEx.Combine(action.OverriddenSourceDirectory, action.ScriptFile);
         }
         
         public override ActionBase CreateFromForm()
@@ -23,8 +24,8 @@ namespace Inedo.BuildMasterExtensions.NSIS
 
             return new MakeNSISAction
             {
-                ScriptFile = Util.Path2.GetFileName(this.ctlScriptFile.Text),
-                OverriddenSourceDirectory = Util.Path2.GetDirectoryName(this.ctlScriptFile.Text)
+                ScriptFile = PathEx.GetFileName(this.ctlScriptFile.Text),
+                OverriddenSourceDirectory = PathEx.GetDirectoryName(this.ctlScriptFile.Text)
             };
         }
 
@@ -37,12 +38,7 @@ namespace Inedo.BuildMasterExtensions.NSIS
             };
 
             this.Controls.Add(
-                new FormFieldGroup(
-                    "Script File",
-                    "The script file (.nsi) to execute.",
-                    true,
-                    new StandardFormField("Script File:", this.ctlScriptFile)
-                )
+                new SlimFormField("Script file (.nsi):", this.ctlScriptFile)
             );
         }
     }

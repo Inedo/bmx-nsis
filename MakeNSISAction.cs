@@ -1,16 +1,18 @@
-﻿using Inedo.BuildMaster;
+﻿using System.ComponentModel;
+using Inedo.BuildMaster;
 using Inedo.BuildMaster.Extensibility.Actions;
 using Inedo.BuildMaster.Web;
+using Inedo.IO;
+using Inedo.Serialization;
 
 namespace Inedo.BuildMasterExtensions.NSIS
 {
     /// <summary>
     /// Build NSIS Project action.
     /// </summary>
-    [ActionProperties(
-        "Build NSIS Project",
-        "Executes MakeNSIS to build an NSIS project.",
-        "NSIS")]
+    [DisplayName("Build NSIS Project")]
+    [Description("Executes MakeNSIS to build an NSIS project.")]
+    [Tag("nsis")]
     [CustomEditor(typeof(MakeNSISActionEditor))]
     public sealed class MakeNSISAction : AgentBasedActionBase
     {
@@ -41,7 +43,7 @@ namespace Inedo.BuildMasterExtensions.NSIS
         {
             return string.Format(
                 "Build {0} using NSIS",
-                Util.Path2.Combine(this.OverriddenSourceDirectory ?? string.Empty, this.ScriptFile ?? string.Empty)
+                PathEx.Combine(this.OverriddenSourceDirectory ?? string.Empty, this.ScriptFile ?? string.Empty)
             );
         }
 
@@ -66,7 +68,7 @@ namespace Inedo.BuildMasterExtensions.NSIS
                 return;
             }
 
-            var nsisPath = Util.Path2.Combine(configurer.NSISPath, "makensis.exe");
+            var nsisPath = PathEx.Combine(configurer.NSISPath, "makensis.exe");
 
             this.LogInformation("Running MakeNSIS...");
 

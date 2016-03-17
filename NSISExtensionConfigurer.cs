@@ -1,8 +1,8 @@
 ﻿using System;
 using System.ComponentModel;
 using System.IO;
-using Inedo.BuildMaster;
 using Inedo.BuildMaster.Extensibility.Configurers.Extension;
+using Inedo.Serialization;
 using Microsoft.Win32;
 
 namespace Inedo.BuildMasterExtensions.NSIS
